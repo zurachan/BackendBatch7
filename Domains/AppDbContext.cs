@@ -5,12 +5,17 @@ namespace BackendBatch7.Domains
     public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
     {
         public DbSet<User> User { get; set; }
+        public DbSet<Department> Department { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Department>().HasData(
+                new Department { Id = 1, Department_name = "Phát triển phần mềm", Created_date = DateTime.Now, IsDeleted = false },
+                new Department { Id = 2, Department_name = "Vận hành", Created_date = DateTime.Now, IsDeleted = false },
+                new Department { Id = 3, Department_name = "Hỗ trợ khách hàng", Created_date = DateTime.Now, IsDeleted = false });
+
             modelBuilder.Entity<User>()
                 .HasIndex(x => x.Email)
                 .IsUnique();
-
 
             modelBuilder.Entity<User>().HasData(
                new User { Id = 1, First_name = "A", Last_name = "Nguyen Van", Email = "nguyenvanA@gmail.com", Created_date = DateTime.Now },
