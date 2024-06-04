@@ -10,11 +10,11 @@ namespace BackendBatch7.Controllers
     [ApiController]
     public class UserController(IUserService userService) : ControllerBase
     {
-        private IUserService _userService = userService;
+        private readonly IUserService _userService = userService;
 
         // GET: api/User
-        [HttpPost("search")]
-        public PagedResponse<List<User>> GetUsers(UserSearchParam param) => _userService.GetPaginationUser(param);
+        [HttpGet("search")]
+        public PagedResponse<List<User>> GetUsers([FromQuery] UserSearchParam param) => _userService.GetPaginationUser(param);
 
         // GET: api/User/5
         [HttpGet("{id}")]

@@ -1,3 +1,4 @@
+using BackendBatch7.Common.Cache;
 using BackendBatch7.Domains;
 using BackendBatch7.Services;
 using Microsoft.EntityFrameworkCore;
@@ -24,7 +25,10 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });
+builder.Services.AddMemoryCache();
+builder.Services.AddScoped(typeof(ICacheService<>), typeof(CacheService<>));
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

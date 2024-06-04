@@ -2,6 +2,10 @@
 {
     public class UserSearchParam : BaseSearchParam
     {
+        public UserSearchParam()
+        {
+        }
+
         public UserSearchParam(int pageNumber, int pageSize) : base(pageNumber, pageSize)
         {
         }
