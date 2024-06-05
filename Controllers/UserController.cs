@@ -1,4 +1,5 @@
-﻿using BackendBatch7.Domains;
+﻿using BackendBatch7.Attributes;
+using BackendBatch7.Domains;
 using BackendBatch7.Models;
 using BackendBatch7.SearchParam;
 using BackendBatch7.Services;
@@ -18,7 +19,11 @@ namespace BackendBatch7.Controllers
 
         // GET: api/User/5
         [HttpGet("{id}")]
-        public Response<User> GetUser(int id) => _userService.GetUserById(id);
+        [Cache]
+        public Response<User> GetUser(int id)
+        {
+            return _userService.GetUserById(id);
+        }
 
         [HttpPost]
         public Response<User> CreateUser(User model) => _userService.CreateUser(model);
