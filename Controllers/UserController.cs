@@ -14,6 +14,10 @@ namespace BackendBatch7.Controllers
         private readonly IUserService _userService = userService;
 
         // GET: api/User
+        [HttpGet]
+        public Response<List<User>> GetAllUsers() => _userService.GetAllUser();
+
+        // GET: api/User
         [HttpGet("search")]
         public PagedResponse<List<User>> GetUsers([FromQuery] UserSearchParam param) => _userService.GetPaginationUser(param);
 

@@ -8,6 +8,7 @@ namespace BackendBatch7.Services
 {
     public interface IUserService
     {
+        Response<List<User>> GetAllUser();
         PagedResponse<List<User>> GetPaginationUser(UserSearchParam param);
         Response<User> GetUserById(int Id);
         Response<User> CreateUser(User model);
@@ -94,6 +95,12 @@ namespace BackendBatch7.Services
         private List<User> GetCacheUser()
         {
             return _cacheService.Get(CacheKeys.Users);
+        }
+
+        public Response<List<User>> GetAllUser()
+        {
+            var users = GetCacheUser();
+            return new Response<List<User>>(users);
         }
     }
 
