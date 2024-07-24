@@ -1,6 +1,0 @@
-@BackendBatch7_HostAddress = http://localhost:5072
-
-GET {{BackendBatch7_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
