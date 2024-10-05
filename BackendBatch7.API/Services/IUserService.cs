@@ -11,9 +11,9 @@ namespace BackendBatch7.API.Services
         Response<List<User>> GetAllUser();
         PagedResponse<List<User>> GetPaginationUser(UserSearchParam param);
         Response<User> GetUserById(int Id);
-        Task<Response<User>> CreateUser(User model);
-        Task<Response<User>> UpdateUser(int Id, User model);
-        Task<Response<bool>> DeleteUser(int Id);
+        Response<User> CreateUser(User model);
+        Response<User> UpdateUser(int Id, User model);
+        Response<bool> DeleteUser(int Id);
     }
 
     public class UserService(AppDbContext context, ICacheService<User> cacheService, IUnitOfWork unitOfWork, IUserRepository userRepository) : IUserService
@@ -39,19 +39,19 @@ namespace BackendBatch7.API.Services
             return new Response<User>(user);
         }
 
-        public async Task<Response<User>> CreateUser(User model)
+        public Response<User> CreateUser(User model)
         {
             var user = userRepository.FirstOrDefault(x => x.Email == model.Email);
             if (user != null) return new Response<User> { Success = false, Message = "User existed" };
 
             userRepository.Add(model);
-            var success = await unitOfWork.CommitAsync();
+            var success = unitOfWork.Commit();
 
             if (!success) return new Response<User> { Success = false, Message = "Create User fail" };
             return new Response<User>(model);
         }
 
-        public async Task<Response<User>> UpdateUser(int Id, User model)
+        public Response<User> UpdateUser(int Id, User model)
         {
             if (Id != model.Id) return new Response<User> { Success = false, Message = "Bad request" };
             var user = userRepository.FirstOrDefault(x => x.Id == Id);
@@ -62,20 +62,20 @@ namespace BackendBatch7.API.Services
             user.Email = model.Email;
             user.UpdatedBy = model.UpdatedBy;
             userRepository.Update(model);
-            var success = await unitOfWork.CommitAsync();
+            var success = unitOfWork.Commit();
 
             if (!success) return new Response<User> { Success = false, Message = "Update User fail" };
             return new Response<User>(user);
         }
 
-        public async Task<Response<bool>> DeleteUser(int Id)
+        public Response<bool> DeleteUser(int Id)
         {
             if (Id == 0) return new Response<bool> { Success = false, Message = "Bad request" };
             var user = userRepository.FirstOrDefault(x => x.Id == Id);
             if (user == null) return new Response<bool> { Success = false, Message = "User not found" };
 
             userRepository.Delete(user);
-            var success = await unitOfWork.CommitAsync();
+            var success = unitOfWork.Commit();
 
             if (!success) return new Response<bool> { Success = false, Message = "Delete User fail" };
             return new Response<bool> { Success = true };

@@ -24,12 +24,12 @@ namespace BackendBatch7.API.Controllers
         public Response<User> GetUser(int id) => userService.GetUserById(id);
 
         [HttpPost]
-        public Task<Response<User>> CreateUser(User model) => userService.CreateUser(model);
+        public Response<User> CreateUser(User model) => userService.CreateUser(model);
 
         [HttpPut("{id}")]
-        public Task<Response<User>> UpdateUser(int id, User model) => userService.UpdateUser(id, model);
+        public Response<User> UpdateUser(int id, User model) => userService.UpdateUser(id, model);
 
         [HttpDelete("{id}")]
-        public Task<Response<bool>> DeleteUser(int id) => userService.DeleteUser(id);
+        public Response<bool> DeleteUser(int id) => userService.DeleteUser(id);
     }
 }
