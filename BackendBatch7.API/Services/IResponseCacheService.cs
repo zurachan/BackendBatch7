@@ -20,7 +20,6 @@ namespace BackendBatch7.API.Services
         {
             var cacheResponse = await _distributedCache.GetStringAsync(cacheKey);
             return string.IsNullOrEmpty(cacheResponse) ? null : cacheResponse;
-
         }
 
         public async Task SetCacheResponseAsync(string cacheKey, object response, TimeSpan timeOut)

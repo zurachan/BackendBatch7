@@ -1,4 +1,4 @@
-﻿using BackendBatch7.API.Common.Cache;
+﻿using BackendBatch7.API.Services;
 using BackendBatch7.Domain;
 using BackendBatch7.Infrastructure;
 using Microsoft.EntityFrameworkCore;
@@ -17,11 +17,15 @@ namespace BackendBatch7.API.Installers
             {
                 builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
             }));
-            services.AddDbContext<AppDbContext>(options =>
-            {
-                options.UseSqlServer(configuration.GetConnectionString("default"));
-                options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-            });
+            //services.AddDbContext<AppDbContext>(options =>
+            //{
+            //    options.UseSqlServer(configuration.GetConnectionString("default"));
+            //    options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+            //});
+
+            services.AddDbContext<AppDbContext>(options => options.UseSqlite("Data Source=BeBatch7.sqlite"));
+            // Add the seeding worker
+            services.AddHostedService<SeedingWorker>();
 
             services.AddScoped<Func<AppDbContext>>((provider) => () => provider.GetService<AppDbContext>());
             services.AddScoped<DbFactory>();
@@ -33,7 +37,6 @@ namespace BackendBatch7.API.Installers
             });
 
             services.AddMemoryCache();
-            services.AddScoped(typeof(ICacheService<>), typeof(CacheService<>));
         }
     }
 }

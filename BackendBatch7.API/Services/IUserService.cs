@@ -1,5 +1,4 @@
-﻿using BackendBatch7.API.Common.Cache;
-using BackendBatch7.API.Models;
+﻿using BackendBatch7.API.Models;
 using BackendBatch7.API.SearchParam;
 using BackendBatch7.Domain;
 using BackendBatch7.Infrastructure;
@@ -16,7 +15,7 @@ namespace BackendBatch7.API.Services
         Response<bool> DeleteUser(int Id);
     }
 
-    public class UserService(AppDbContext context, ICacheService<User> cacheService, IUnitOfWork unitOfWork, IUserRepository userRepository) : IUserService
+    public class UserService(AppDbContext context, IUnitOfWork unitOfWork, IUserRepository userRepository) : IUserService
     {
         public PagedResponse<List<User>> GetPaginationUser(UserSearchParam param)
         {
@@ -34,9 +33,9 @@ namespace BackendBatch7.API.Services
 
         public Response<User> GetUserById(int Id)
         {
-            var user = userRepository.FirstOrDefault(x => x.Id == Id);
-            if (user == null) return new Response<User> { Success = false, Message = "User not found" };
-            return new Response<User>(user);
+            var domain = userRepository.FirstOrDefault(x => x.Id == Id);
+            if (domain == null) return new Response<User> { Success = false, Message = "User not found" };
+            return new Response<User>(domain);
         }
 
         public Response<User> CreateUser(User model)
@@ -54,18 +53,18 @@ namespace BackendBatch7.API.Services
         public Response<User> UpdateUser(int Id, User model)
         {
             if (Id != model.Id) return new Response<User> { Success = false, Message = "Bad request" };
-            var user = userRepository.FirstOrDefault(x => x.Id == Id);
-            if (user == null) return new Response<User> { Success = false, Message = "User not found" };
+            var domain = userRepository.FirstOrDefault(x => x.Id == Id);
+            if (domain == null) return new Response<User> { Success = false, Message = "User not found" };
 
-            user.First_name = model.First_name;
-            user.Last_name = model.Last_name;
-            user.Email = model.Email;
-            user.UpdatedBy = model.UpdatedBy;
+            domain.First_name = model.First_name;
+            domain.Last_name = model.Last_name;
+            domain.Email = model.Email;
+            domain.UpdatedBy = model.UpdatedBy;
             userRepository.Update(model);
             var success = unitOfWork.Commit();
 
             if (!success) return new Response<User> { Success = false, Message = "Update User fail" };
-            return new Response<User>(user);
+            return new Response<User>(domain);
         }
 
         public Response<bool> DeleteUser(int Id)

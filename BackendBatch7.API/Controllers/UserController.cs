@@ -20,7 +20,6 @@ namespace BackendBatch7.API.Controllers
 
         // GET: api/User/5
         [HttpGet("{id}")]
-        //[Cache]
         public Response<User> GetUser(int id) => userService.GetUserById(id);
 
         [HttpPost]
