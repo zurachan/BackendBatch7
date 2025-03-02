@@ -1,7 +1,8 @@
 ﻿using BackendBatch7.API.Models;
 using BackendBatch7.API.SearchParam;
-using BackendBatch7.Domain;
+using BackendBatch7.Domain.Entities;
 using BackendBatch7.Infrastructure;
+using BackendBatch7.Infrastructure.Core.Interfaces;
 
 namespace BackendBatch7.API.Services
 {

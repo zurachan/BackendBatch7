@@ -1,4 +1,4 @@
-﻿using BackendBatch7.Domain;
+﻿using BackendBatch7.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace BackendBatch7.Infrastructure
@@ -13,6 +13,5 @@ namespace BackendBatch7.Infrastructure
         public DbSet<Department> Department { get; set; }
         public DbSet<Role> Role { get; set; }
         public DbSet<Permission> Permission { get; set; }
-
     }
 }

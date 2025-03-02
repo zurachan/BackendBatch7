@@ -1,7 +1,7 @@
 ﻿using BackendBatch7.API.Models;
 using BackendBatch7.API.SearchParam;
 using BackendBatch7.API.Services;
-using BackendBatch7.Domain;
+using BackendBatch7.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BackendBatch7.API.Controllers

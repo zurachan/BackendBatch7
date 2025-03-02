@@ -1,6 +1,7 @@
 ﻿using BackendBatch7.API.Services;
-using BackendBatch7.Domain;
 using BackendBatch7.Infrastructure;
+using BackendBatch7.Infrastructure.Core.Implements;
+using BackendBatch7.Infrastructure.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
@@ -27,8 +28,8 @@ namespace BackendBatch7.API.Installers
             // Add the seeding worker
             services.AddHostedService<SeedingWorker>();
 
-            services.AddScoped<Func<AppDbContext>>((provider) => () => provider.GetService<AppDbContext>());
-            services.AddScoped<DbFactory>();
+            services.AddScoped<IDbFactory>(sp => new DbFactory(() => sp.GetRequiredService<AppDbContext>()));
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddControllers().AddJsonOptions(options =>

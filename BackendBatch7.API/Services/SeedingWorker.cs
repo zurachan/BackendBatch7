@@ -1,4 +1,4 @@
-﻿using BackendBatch7.Domain;
+﻿using BackendBatch7.Domain.Entities;
 using BackendBatch7.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 

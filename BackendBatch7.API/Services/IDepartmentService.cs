@@ -1,7 +1,9 @@
 ﻿using BackendBatch7.API.Models;
 using BackendBatch7.API.SearchParam;
-using BackendBatch7.Domain;
+using BackendBatch7.Domain.Entities;
 using BackendBatch7.Infrastructure;
+using BackendBatch7.Infrastructure.Core.Interfaces;
+using BackendBatch7.Infrastructure.Interfaces;
 
 namespace BackendBatch7.API.Services
 {
@@ -13,7 +15,7 @@ namespace BackendBatch7.API.Services
         Response<Department> UpdateDepartment(int Id, Department model);
         Response<bool> DeleteDepartment(int Id);
     }
-    public class DepartmentService(AppDbContext context, IUnitOfWork unitOfWork, IDepartmentRepository departmentRepository) : IDepartmentService
+    public class DepartmentService(AppDbContext context, IUnitOfWork unitOfWork, IDepartmentRepo departmentRepository) : IDepartmentService
     {
         public PagedResponse<List<Department>> GetPaginationDepartment(DepartmentSearchParam param)
         {
@@ -31,9 +33,9 @@ namespace BackendBatch7.API.Services
             return pagedReponse;
         }
 
-        public Response<Department> GetDepartmentById(int Id)
+        public async Task<Response<Department>> GetDepartmentById(int Id)
         {
-            var domain = departmentRepository.FirstOrDefault(x => x.Id == Id);
+            var domain = await departmentRepository.FindNoTrackingAsync(x => x.Id == Id);
             if (domain == null) return new Response<Department> { Success = false, Message = "Department not found" };
             return new Response<Department>(domain);
         }

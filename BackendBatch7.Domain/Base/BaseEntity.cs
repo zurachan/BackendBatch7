@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BackendBatch7.Domain
+namespace BackendBatch7.Domain.Base
 {
     public interface IBaseEntity<T>
     {

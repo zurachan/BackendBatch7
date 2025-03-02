@@ -1,7 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using BackendBatch7.Domain.Base;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BackendBatch7.Domain
+namespace BackendBatch7.Domain.Entities
 {
     public class User : AuditEntity<int>
     {
