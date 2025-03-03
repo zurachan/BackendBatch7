@@ -1,4 +1,4 @@
-﻿using BackendBatch7.API.Models;
+﻿using BackendBatch7.Domain.Response.Base;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BackendBatch7.API.Controllers

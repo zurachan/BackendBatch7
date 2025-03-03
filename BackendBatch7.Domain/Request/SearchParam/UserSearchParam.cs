@@ -1,15 +1,9 @@
-﻿namespace BackendBatch7.API.SearchParam
+﻿namespace BackendBatch7.Domain.Request.SearchParam
 {
     public class UserSearchParam : BaseSearchParam
     {
-        public UserSearchParam()
-        {
-        }
-
         public UserSearchParam(int pageNumber, int pageSize) : base(pageNumber, pageSize)
         {
         }
-
-        public string? User { get; set; }
     }
 }

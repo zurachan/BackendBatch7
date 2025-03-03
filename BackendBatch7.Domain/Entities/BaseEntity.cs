@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BackendBatch7.Domain.Base
+namespace BackendBatch7.Domain.Entities
 {
     public interface IBaseEntity<T>
     {
@@ -22,7 +22,7 @@ namespace BackendBatch7.Domain.Base
         DateTime CreatedDate { get; set; }
         string CreatedBy { get; set; }
         DateTime? UpdatedDate { get; set; }
-        string UpdatedBy { get; set; }
+        string? UpdatedBy { get; set; }
     }
     public interface IAuditEntity<T> : IAuditEntity, IDeleteEntity<T>
     {
@@ -38,14 +38,19 @@ namespace BackendBatch7.Domain.Base
 
     public abstract class DeleteEntity<T> : BaseEntity<T>, IDeleteEntity<T>
     {
+        [Column("is_deleted")]
         public bool IsDeleted { get; set; }
     }
 
     public abstract class AuditEntity<T> : DeleteEntity<T>, IAuditEntity<T>
     {
+        [Column("created_date")]
         public DateTime CreatedDate { get; set; }
-        public string CreatedBy { get; set; }
-        public DateTime? UpdatedDate { get; set; }
-        public string? UpdatedBy { get; set; }
+        [Column("created_by")]
+        public string CreatedBy { get; set; } = "System";
+        [Column("updated_date")]
+        public DateTime? UpdatedDate { get; set; } = null;
+        [Column("updated_by")]
+        public string? UpdatedBy { get; set; } = null;
     }
 }

@@ -1,9 +1,9 @@
-﻿using BackendBatch7.Domain.Base;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BackendBatch7.Domain.Entities
 {
+    [Table("departments")]
     public class Department : AuditEntity<int>
     {
         [Required]

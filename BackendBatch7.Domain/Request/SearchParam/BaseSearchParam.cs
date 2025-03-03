@@ -1,13 +1,13 @@
-﻿namespace BackendBatch7.API.SearchParam
+﻿namespace BackendBatch7.Domain.Request.SearchParam
 {
     public class BaseSearchParam
     {
-        public int PageNumber { get; set; }
-        public int PageSize { get; set; }
+        public int PageNumber { get; set; } = 1;
+        public int PageSize { get; set; } = 10;
+        public string? SearchText { get; set; } = null;
         public BaseSearchParam()
         {
-            PageNumber = 1;
-            PageSize = 10;
+
         }
         public BaseSearchParam(int pageNumber, int pageSize)
         {

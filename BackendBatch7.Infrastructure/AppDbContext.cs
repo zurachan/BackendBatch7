@@ -13,5 +13,6 @@ namespace BackendBatch7.Infrastructure
         public DbSet<Department> Department { get; set; }
         public DbSet<Role> Role { get; set; }
         public DbSet<Permission> Permission { get; set; }
+        public DbSet<AuditLog> AuditLog { get; set; }
     }
 }

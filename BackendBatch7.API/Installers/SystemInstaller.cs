@@ -2,6 +2,7 @@
 using BackendBatch7.Infrastructure;
 using BackendBatch7.Infrastructure.Core.Implements;
 using BackendBatch7.Infrastructure.Core.Interfaces;
+using BackendBatch7.Infrastructure.Mapping;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
@@ -18,13 +19,13 @@ namespace BackendBatch7.API.Installers
             {
                 builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
             }));
-            //services.AddDbContext<AppDbContext>(options =>
-            //{
-            //    options.UseSqlServer(configuration.GetConnectionString("default"));
-            //    options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-            //});
+            services.AddDbContext<AppDbContext>(options =>
+            {
+                options.UseSqlServer(configuration.GetConnectionString("default"));
+                //options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+            });
 
-            services.AddDbContext<AppDbContext>(options => options.UseSqlite("Data Source=BeBatch7.sqlite"));
+            //services.AddDbContext<AppDbContext>(options => options.UseSqlite("Data Source=BeBatch7.sqlite"));
             // Add the seeding worker
             services.AddHostedService<SeedingWorker>();
 
@@ -38,6 +39,8 @@ namespace BackendBatch7.API.Installers
             });
 
             services.AddMemoryCache();
+            services.AddHttpContextAccessor();
+            services.AddAutoMapper(typeof(MappingProfile));
         }
     }
 }

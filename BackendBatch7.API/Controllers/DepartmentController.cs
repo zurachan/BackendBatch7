@@ -1,32 +1,30 @@
-﻿using BackendBatch7.API.Models;
-using BackendBatch7.API.SearchParam;
-using BackendBatch7.API.Services;
+﻿using BackendBatch7.API.Services;
 using BackendBatch7.Domain.Entities;
+using BackendBatch7.Domain.Request.SearchParam;
+using BackendBatch7.Domain.Response.Base;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BackendBatch7.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DepartmentController(IDepartmentService departmentService) : ControllerBase
+    public class DepartmentController(IDepartmentService service) : ControllerBase
     {
-        private readonly IDepartmentService _departmentService = departmentService;
-
         // GET: api/Department
-        [HttpGet("search")]
-        public PagedResponse<List<Department>> GetDepartments([FromQuery] DepartmentSearchParam param) => _departmentService.GetPaginationDepartment(param);
+        [HttpPost("search")]
+        public async Task<PaginatedResponse<List<Department>>> GetDepartments(DepartmentSearchParam param) => await service.GetPaginationDepartment(param);
 
         // GET: api/Department/5
         [HttpGet("{id}")]
-        public Response<Department> GetDepartment(int id) => _departmentService.GetDepartmentById(id);
+        public async Task<Response<Department>> GetDepartment(int id) => await service.GetDepartmentById(id);
 
         [HttpPost]
-        public Response<Department> CreateDepartment(Department model) => _departmentService.CreateDepartment(model);
+        public async Task<Response<Department>> CreateDepartment(Department model) => await service.CreateDepartment(model);
 
         [HttpPut("{id}")]
-        public Response<Department> UpdateDepartment(int id, Department model) => _departmentService.UpdateDepartment(id, model);
+        public async Task<Response<Department>> UpdateDepartment(int id, Department model) => await service.UpdateDepartment(id, model);
 
         [HttpDelete("{id}")]
-        public Response<bool> DeleteDepartment(int id) => _departmentService.DeleteDepartment(id);
+        public async Task<Response<bool>> DeleteDepartment(int id) => await service.DeleteDepartment(id);
     }
 }
